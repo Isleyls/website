@@ -1,0 +1,128 @@
+// Firebase Config (firebase.js)
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// SignIn.js
+import React, { useState } from "react";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
+
+function SignIn() {
+  const navigate = useNavigate();
+  const { setUser } = useUser();
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", userCredential.user.uid), { email, username });
+      setUser({ uid: userCredential.user.uid, username });
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+      if (userDoc.exists()) {
+        setUser({ uid: userCredential.user.uid, username: userDoc.data().username });
+      }
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
+      <form onSubmit={isSignUp ? handleSignUp : handleSignIn}>
+        {isSignUp && (
+          <div>
+            <label>Username:</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+          </div>
+        )}
+        <div>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </div>
+        <button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</button>
+      </form>
+      {error && <p>{error}</p>}
+      <button onClick={() => setIsSignUp(!isSignUp)}>
+        {isSignUp ? "Already have an account? Sign In" : "New here? Sign Up"}
+      </button>
+    </div>
+  );
+}
+
+export default SignIn;
+
+// Header.js
+import React from "react";
+import { useUser } from "../UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
+function Header() {
+  const { user, setUser } = useUser();
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    setUser(null);
+  };
+
+  return (
+    <header>
+      <nav>
+        <ul>
+          <li>
+            {user ? (
+              <div className="dropdown">
+                <span>Hello, {user.username}</span>
+                <div className="dropdown-content">
+                  <button onClick={handleSignOut}>Sign Out</button>
+                </div>
+              </div>
+            ) : (
+              <a href="/signin">Sign In</a>
+            )}
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default Header;
