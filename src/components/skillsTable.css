@@ -14,8 +14,8 @@
     border: 2px solid blue;
     
 }
-.skillsTable th {
-    background-color: #ffe6f0; /* light pink background for headers (optional) */
+.skillsTable th, .skill_delete {
+    background-color: #ffe6f0;
   }
   .skillsTable table {
   border-collapse: collapse;

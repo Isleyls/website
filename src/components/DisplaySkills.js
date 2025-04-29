@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import useUserRole from "./useUserRole";
 import AddSkillCategory from "./AddSkillCategory";
 import '../components/skillsTable.css';
@@ -53,10 +53,16 @@ function SkillsDashboard() {
       console.error("Error deleting skill:", error);
     }
   };
-
-  if (loadingSkills || loadingRole) {
-    return <div className="skillsTable"><p>Loading...</p></div>;
-  }
+  const handleDeleteSkillCategory = async (categoryId) => {
+    try {
+        await deleteDoc(doc(db, "Skills", categoryId));
+        alert("Category Deleted!");
+        fetchSkillsData(); 
+      }
+      catch (error) {
+      console.error("Error deleting Skill Category:", error);
+    }
+  };
 
   return (
     <div className="skillsTable">
@@ -68,6 +74,10 @@ function SkillsDashboard() {
               <thead>
                 <tr>
                   <th>{skillCategory.category}</th>
+                  <td className = "skill_delete"><button onClick={() => handleDeleteSkillCategory(skillCategory.id)}>
+                          Delete
+                        </button></td>
+                  
                 </tr>
               </thead>
               <tbody>
