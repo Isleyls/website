@@ -74,9 +74,13 @@ function SkillsDashboard() {
               <thead>
                 <tr>
                   <th>{skillCategory.category}</th>
-                  <td className = "skill_delete"><button onClick={() => handleDeleteSkillCategory(skillCategory.id)}>
+                  {role === "admin" && (
+                    <td className = "skill_delete">
+                      <button onClick={() => handleDeleteSkillCategory(skillCategory.id)}>
                           Delete
-                        </button></td>
+                        </button>
+                        </td>
+                  )}
                   
                 </tr>
               </thead>

@@ -11,6 +11,8 @@ function Header() {
     try {
       await auth.signOut();
       console.log("User logged out successfully!");
+      window.location.reload();
+      
     } catch (error) {
       console.error("Error logging out:", error.message);
     }

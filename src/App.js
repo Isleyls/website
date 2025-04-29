@@ -12,7 +12,6 @@ import Meeting from "./components/Meeting";
 import Signin from "./components/Signin";
 import Skills from "./components/Skills";
 import Register from "./components/Register";
-import Testing from "./components/Testing";
 
 function App() {
   
@@ -33,7 +32,6 @@ function App() {
             <Route path="/meeting" element={<Meeting />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/register" element={<Register/>} />
-            <Route path="/testing" element={<Testing/>} />
           </Routes>
       </main>
       <div className = "overlay1">
