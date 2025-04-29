@@ -1,42 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import useUserRole from "./useUserRole";
+import AddSkillCategory from "./AddSkillCategory";
+import '../components/skillsTable.css';
+import '../components/Background.css';
+import '../App.css';
 
-function DisplaySkills() {
+function SkillsDashboard() {
   const [skillsData, setSkillsData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingSkills, setLoadingSkills] = useState(true);
+  const { role, loading: loadingRole } = useUserRole();
+
+  const fetchSkillsData = async () => {
+    try {
+      const skillsCollection = collection(db, "Skills");
+      const skillsDocument = await getDocs(skillsCollection);
+      const skillsList = skillsDocument.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setSkillsData(skillsList);
+      setLoadingSkills(false);
+    } catch (error) {
+      console.error("Error fetching skills data:", error);
+      setLoadingSkills(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchSkillsData = async () => {
-      try {
-        const skillsCollection = collection(db, "Skills");//grabs the skills collection
-        const skillsDocument = await getDocs(skillsCollection); //gets all the documents from the collection
-        const skillsList = skillsDocument.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data() //this is a spread that joins data docID+doc.data(category and skills)
-        }));
-
-        // Set skills data with the data we made into an array to later traverse through it
-        setSkillsData(skillsList);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching skills data:", error);
-        setLoading(false);
-      }
-    };
-
     fetchSkillsData();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  const handleDeleteSkill = async (categoryId, skillToDelete) => {
+    try {
+      const categoryRef = doc(db, "Skills", categoryId);
+      const category = skillsData.find(item => item.id === categoryId);
+      const updatedSkills = category.skills.filter(skill => skill !== skillToDelete);
+
+      await updateDoc(categoryRef, {
+        skills: updatedSkills
+      });
+
+      setSkillsData(prevSkills =>
+        prevSkills.map(item =>
+          item.id === categoryId
+            ? { ...item, skills: updatedSkills }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Error deleting skill:", error);
+    }
+  };
+
+  if (loadingSkills || loadingRole) {
+    return <div className="skillsTable"><p>Loading...</p></div>;
+  }
 
   return (
-    <div>
+    <div className="skillsTable">
       <h3>Skills Categories</h3>
       {skillsData.length > 0 ? (
         skillsData.map((skillCategory) => (
           <div key={skillCategory.id}>
-            <table border="1">
+            <table>
               <thead>
                 <tr>
                   <th>{skillCategory.category}</th>
@@ -46,6 +74,13 @@ function DisplaySkills() {
                 {skillCategory.skills.map((skill, index) => (
                   <tr key={index}>
                     <td>{skill}</td>
+                    {role === "admin" && (
+                      <td>
+                        <button onClick={() => handleDeleteSkill(skillCategory.id, skill)}>
+                          Delete
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -56,8 +91,15 @@ function DisplaySkills() {
       ) : (
         <p>No skills data available.</p>
       )}
+
+      {role === "admin" && (
+        <div>
+          <h3>Admin Dashboard</h3>
+          <AddSkillCategory onSkillsUpdated={fetchSkillsData} />
+        </div>
+      )}
     </div>
   );
 }
 
-export default DisplaySkills;
+export default SkillsDashboard;

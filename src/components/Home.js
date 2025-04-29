@@ -1,5 +1,4 @@
 import React from "react";
-import "./Home.css";
 import "./Background.css";
 import { useAuth } from "./useAuth"; 
 

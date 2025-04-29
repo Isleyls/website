@@ -1,48 +1,46 @@
+/* Wrap everything in a vertical flex container */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.body1 {
-  background-image: url('./appstate.png');
-  height: 100vh; 
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute; 
+/* Header and footer fixed size */
+.header {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  overflow:hidden;
+  right: 0;
+  height: 20px;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  flex-shrink: 0;
 }
 
+.footer {
+  height: 20px;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  flex-shrink: 0;
+}
 .main-content {
-  flex: 1;
-  padding: 20px;
-  text-align: center;
-  background-color: #f4f4f4;
+  background-image: url('./appstate.png');
+   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 20px;
+    margin-top: 60px; 
+    min-height: 100vh; 
+    color: white;
+    width: 100%;
+    position: relative; 
+    left: 0;
+    overflow: auto;
 }
-
-header {
-  background-color: navy;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-footer {
-  background-color: black;
-  color: white;
-  padding: 10px;
-  text-align: center;
-}
-body {
-  margin: 0;
-  padding-top: 60px;
-}
-

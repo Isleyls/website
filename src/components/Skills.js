@@ -1,5 +1,6 @@
 import React from "react";
 import "./Background.css";
+import '../App.css';
 import DisplaySkills from "./DisplaySkills";
 
 function Skills() {

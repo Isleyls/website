@@ -12,13 +12,16 @@ import Meeting from "./components/Meeting";
 import Signin from "./components/Signin";
 import Skills from "./components/Skills";
 import Register from "./components/Register";
-import Testing from "./components/AddSkillCategory";
+import Testing from "./components/Testing";
 
 function App() {
+  
   return (
     <Router>
     <div className="app-container">
+      
       <Header />
+      
       <main className="main-content">
         <Routes>
             <Route path="/" element={<Home />} />
@@ -33,8 +36,12 @@ function App() {
             <Route path="/testing" element={<Testing/>} />
           </Routes>
       </main>
-      <Footer /> 
+      <div className = "overlay1">
+      </div>
+      <Footer />
+      
     </div>
+    
     </Router>
   );
 }
