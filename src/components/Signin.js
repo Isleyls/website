@@ -26,6 +26,7 @@ function Signin() {
     catch(error)
     {
       console.log(e.message);
+      alert("Invalid email or password");
       toast.error(error.message, {
         position: "bottom-center",
       });
