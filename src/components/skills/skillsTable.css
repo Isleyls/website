@@ -1,0 +1,24 @@
+.skillsTable{
+    color: black;
+    background-color: lightgreen;
+    padding: 20px;
+
+}
+.skillsTable tr {
+    background-color: lightblue;
+    color: black;
+    padding: 20px;
+    
+}
+.skillsTable th, td {
+    border: 2px solid blue;
+    
+}
+.skillsTable th, .skill_delete {
+    background-color: #ffe6f0;
+  }
+  .skillsTable table {
+  border-collapse: collapse;
+  width: 100%;
+}
+

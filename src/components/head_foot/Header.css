@@ -1,0 +1,94 @@
+.header {
+    background-color: black;
+    padding: 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+    position: fixed;
+    left: 5px;
+    margin-left: 5px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: center; 
+    flex-wrap: wrap;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: rgb(255,208,36);
+    text-decoration: underline;
+    font-size: 20px;
+  }
+  
+  .sign-in {
+    white-space: nowrap;
+    position: fixed;
+    top: 10;
+    right: 0;
+    padding: 10px;
+  }
+  
+  .sign-in-button {
+    background-color: white;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .sign-in-button:hover {
+    background-color: rgb(181, 180, 180);
+  }
+  
+  @media screen and (max-width: 700px) {
+    .logo{
+        position: static;
+    }
+    .nav-container {
+      flex-direction: column;
+      text-align: center;
+      padding: 5px;
+    }
+  
+    .nav-links {
+      margin: 10px 0 0 0 ;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .sign-in {
+      position: static;
+      margin-top: 10px;
+    }
+  }
+  
