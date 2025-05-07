@@ -1,7 +1,7 @@
 import React from "react";
 import "./../Background.css";
 import '../../App.css';
-import DisplaySkills from "./DisplaySkills";
+import DisplayTests from "../testing/DisplayTests";
 
 function Skills() {
   return (
@@ -9,7 +9,7 @@ function Skills() {
       <div className = "overlay">
         <h2>Skills Page</h2>
         <p>Welcome to my website!</p>
-        <DisplaySkills />
+        <DisplayTests collectionName = "Skills"/>
       </div>
     </div>
   );

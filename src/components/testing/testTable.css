@@ -1,23 +1,23 @@
-.skillsTable{
+.categoryTable{
     color: black;
     background-color: lightgreen;
     padding: 20px;
 
 }
-.skillsTable tr {
+.categoryTable tr {
     background-color: lightblue;
     color: black;
     padding: 20px;
     
 }
-.skillsTable th, td {
+.categoryTable th, td {
     border: 2px solid blue;
     
 }
-.skillsTable th, .skill_delete {
+.categoryTable th, .delete1 {
     background-color: #ffe6f0;
   }
-  .skillsTable table {
+  .categoryTable table {
   border-collapse: collapse;
   width: 100%;
 }

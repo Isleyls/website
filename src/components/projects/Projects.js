@@ -6,6 +6,7 @@ function Projects(){
         <div className = "body2">
             <div className = "overlay">
                 <h1>Projects page</h1>
+                <test />
             </div>
         </div>
     );
