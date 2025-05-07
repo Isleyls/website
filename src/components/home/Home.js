@@ -1,6 +1,6 @@
 import React from "react";
-import "./Background.css";
-import { useAuth } from "./useAuth"; 
+import "./../Background.css";
+import { useAuth } from "../authorization/useAuth"; 
 
 function Home() {
   const { userDetails, loading } = useAuth();

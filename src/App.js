@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./components/Home";
-import About from "./components/About";
+import Header from "./components/head_foot/Header";
+import Footer from "./components/head_foot/Footer";
+import Home from "./components/home/Home";
+import About from "./components/aboutMe/About";
 import Experience from "./components/experience1/Experience";
 import Projects from "./components/projects/Projects";
-import Contact from "./components/Contact";
-import Meeting from "./components/Meeting";
-import Signin from "./components/Signin";
+import Contact from "./components/contact/Contact";
+import Meeting from "./components/meetings/Meeting";
+import Signin from "./components/authorization/Signin";
 import Skills from "./components/skills/Skills";
-import Register from "./components/Register";
+import Register from "./components/authorization/Register";
 
 function App() {
   
