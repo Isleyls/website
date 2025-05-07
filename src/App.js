@@ -5,12 +5,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import About from "./components/About";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
+import Experience from "./components/experience1/Experience";
+import Projects from "./components/projects/Projects";
 import Contact from "./components/Contact";
 import Meeting from "./components/Meeting";
 import Signin from "./components/Signin";
-import Skills from "./components/Skills";
+import Skills from "./components/skills/Skills";
 import Register from "./components/Register";
 
 function App() {
