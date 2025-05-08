@@ -1,13 +1,13 @@
 import React from "react";
 import "../Background.css";
-import DisplayExperience from "./DisplayExperience";
+import DisplayTables from "../tables/DisplayTables";
 
 function Experience() {
   return (
     <div className = "body2">
       <div className = "overlay">
         <h2>Experience Page</h2>
-        <DisplayExperience />
+        <DisplayTables collectionName = "Experience"/>
       </div>
     </div>
   );

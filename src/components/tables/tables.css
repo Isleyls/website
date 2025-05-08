@@ -1,0 +1,57 @@
+.categoryTable{
+    color: black;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 7px;
+
+}
+.categoryTable tr {
+    background-color: lightyellow;
+    font-weight: bold;
+    color: black;
+    padding: 20px;
+    border: 3px solid black;
+    
+}
+.categoryTable th, td {
+    padding: 3px;
+}
+.categoryTable th {
+    font-size: 20px;
+    border-top-left-radius: 5px;
+    border-left: 3px solid black;
+}
+.categoryTable th, .delete1 {
+    background-color: black;
+    color: yellow;
+    padding: 10px;
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+  }
+  .delete1{
+    border-top-right-radius: 5px;
+    border-right: 3px solid black;
+  }
+
+.categoryTable table {
+  border-collapse: collapse;
+  width: 100%;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.tablesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 10px;
+    padding: 20px;
+    width: auto;
+  }
+  
+  .tableCard {
+    border-radius: 7px;
+  }
+
+  input{
+    margin: 2px;
+  }

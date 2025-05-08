@@ -44,11 +44,14 @@
   }
   
   .nav-links a:hover {
-    color: rgb(255,208,36);
-    text-decoration: underline;
     font-size: 20px;
   }
-  
+  .nav-links a.active {
+    text-decoration: underline;
+    font-weight: bold;
+    color: rgb(255, 208, 36);
+  }
+
   .sign-in {
     white-space: nowrap;
     position: fixed;
@@ -84,6 +87,12 @@
       margin: 10px 0 0 0 ;
       flex-direction: column;
       gap: 10px;
+      
+    }
+    .nav-links a.active {
+      text-decoration: underline;
+      font-weight: bold;
+      color: rgb(255, 208, 36); /* Optional: change the color when active */
     }
   
     .sign-in {

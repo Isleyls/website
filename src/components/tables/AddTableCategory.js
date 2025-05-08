@@ -2,67 +2,68 @@ import React, { useState } from "react";
 import { db } from "../firebase";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import useUserRole from "../authorization/useUserRole";
+import './tables.css';
 
-function AddExperiencesCategory({ onExperiencesUpdated }) {
+function AddTableCategory({ onTablesUpdated, collectionName2 }) {
   const { role } = useUserRole();
   const [mode, setMode] = useState(""); // "category" or "addToCategory"
   const [categoryId, setCategoryId] = useState("");
   const [categoryName, setCategoryName] = useState("");
-  const [experiences, setExperiences] = useState("");
+  const [tables, setTables] = useState("");
 
   const resetForm = () => {
     setCategoryId("");
     setCategoryName("");
-    setExperiences("");
+    setTables("");
     setMode("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const experienceList = experiences.split(",").map(experience => experience.trim()).filter(experience => experience);
+    const tableList = tables.split(",").map(table => table.trim()).filter(table => table);
 
     if (role !== "admin") {
-      alert("Only admins can add new experience.");
+      alert("Only admins can add new tables.");
       return;
     }
 
     try {
       if (mode === "category") {
-        await setDoc(doc(db, "Experience", categoryId.toLowerCase()), {
+        await setDoc(doc(db, collectionName2, categoryId.toLowerCase()), {
           category: categoryName,
-          experiences: experienceList,
+          tables: tableList,
         });
-        alert("New experience category added!");
+        alert("New table category added!");
       } else if (mode === "addToCategory") {
-        const ref = doc(db, "Experience", categoryId.toLowerCase());
+        const ref = doc(db, collectionName2, categoryId.toLowerCase());
         const docSnap = await getDoc(ref);
         if (!docSnap.exists()) {
           alert("Category ID does not exist.");
           return;
         }
 
-        const currentExperiences = docSnap.data().experiences || [];
-        const newExperiences = [...new Set([...currentExperiences, ...experienceList])];
+        const currentTables = docSnap.data().tables || [];
+        const newTables = [...new Set([...currentTables, ...tableList])];
 
-        await updateDoc(ref, { experiences: newExperiences });
-        alert("Experiences added to existing category!");
+        await updateDoc(ref, { tables: newTables });
+        alert(`New ${collectionName2} have been added to the existing category!`);
       }
 
       resetForm();
-      if (onExperiencesUpdated) onExperiencesUpdated();
+      if (onTablesUpdated) onTablesUpdated();
     } catch (error) {
-      console.error("Error adding experiences:", error.message);
+      console.error(`Error adding ${collectionName2}:`, error.message);
     }
   };
 
   return role === "admin" ? (
     <div style={{ textAlign: "center" }}>
       <div>
-        <button onClick={() => setMode("category")}>Add New Experience Category</button>
-        <button onClick={() => setMode("addToCategory")}>Add Experiences to Existing Category</button>
+        <button onClick={() => setMode("category")}>Add New {collectionName2} Category</button>
+        <button onClick={() => setMode("addToCategory")}>Add {collectionName2} to Existing Category</button>
       </div>
-
+    
       {mode && (
         <form onSubmit={handleSubmit} style={{ maxWidth: "500px", margin: "auto" }}>
           <label>Category ID (document ID):</label>
@@ -87,11 +88,11 @@ function AddExperiencesCategory({ onExperiencesUpdated }) {
             </>
           )}
 
-          <label>Experiences (comma-separated):</label>
+          <label>Tables (comma-separated):</label>
           <input
             type="text"
-            value={experiences}
-            onChange={(e) => setExperiences(e.target.value)}
+            value={tables}
+            onChange={(e) => setTables(e.target.value)}
             required
           />
           <br />
@@ -101,8 +102,8 @@ function AddExperiencesCategory({ onExperiencesUpdated }) {
       )}
     </div>
   ) : (
-    <p>You do not have permission to add experiences.</p>
+    <p>You do not have permission to add tables.</p>
   );
 }
 
-export default AddExperiencesCategory;
+export default AddTableCategory;

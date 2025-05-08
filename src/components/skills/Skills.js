@@ -1,15 +1,14 @@
 import React from "react";
 import "./../Background.css";
 import '../../App.css';
-import DisplayTests from "../testing/DisplayTests";
+import DisplayTables from "../tables/DisplayTables";
 
 function Skills() {
   return (
     <div className = "body2">
       <div className = "overlay">
-        <h2>Skills Page</h2>
-        <p>Welcome to my website!</p>
-        <DisplayTests collectionName = "Skills"/>
+        <h2>My Skills</h2>
+        <DisplayTables collectionName = "Skills"/>
       </div>
     </div>
   );

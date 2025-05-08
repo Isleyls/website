@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./Header.css"; // Ensure this file is properly linked
 import { useAuth } from "../authorization/useAuth"; 
 import { auth } from "../firebase";
@@ -22,13 +22,13 @@ function Header() {
       <div className="nav-container">
         <div className="logo">Logo</div>
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/skills">Skills</Link>
-          <Link to= "/tests">Tests</Link>
-          <Link to="/projects">Projects</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/meeting">Meeting</Link>
+          <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>Home</NavLink>
+          <NavLink to="/about" className={({ isActive }) => (isActive ? "active" : "")}>About</NavLink>
+          <NavLink to="/skills" className={({ isActive }) => (isActive ? "active" : "")}>Skills</NavLink>
+          <NavLink to="/projects" className={({ isActive }) => (isActive ? "active" : "")}>Projects</NavLink>
+          <NavLink to="/experience" className={({ isActive }) => (isActive ? "active" : "")}>Experience</NavLink>
+          <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>Contact</NavLink>
+          <NavLink to="/meeting" className={({ isActive }) => (isActive ? "active" : "")}>Meeting</NavLink>
 
         </div>
         <div className="sign-in">
