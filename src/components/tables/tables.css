@@ -75,3 +75,35 @@
   .company1{
     text-align: center;
   }
+
+  .experienceContent {
+    background-color: lightyellow;
+    padding: 15px;
+    border: 3px solid black;
+    border-radius: 7px;
+    font-weight: bold;
+    color: black;
+    margin: 20px;
+    height: auto; /* fixed height */
+    max-width: 200px;
+    box-sizing: border-box;
+  }
+  .description{
+    height: 75px;
+    overflow-y: auto;       
+    overflow-x: hidden;     
+    word-wrap: break-word;   /* break long words if needed */
+    white-space: normal;     /* allow line breaks */
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .experienceContent h2,
+  .experienceContent h4 {
+    margin: 5px;
+  }
+  
+  .experienceContent p {
+    margin-top: 10px;
+    font-weight: normal;
+  }

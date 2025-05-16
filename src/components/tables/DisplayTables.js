@@ -91,43 +91,79 @@ function TablesDashboard({collectionName}) {
       {role === "admin" && (
         <div>
           <h3>Admin Dashboard</h3>
-          <AddTableCategory onTablesUpdated={fetchTablesData} collectionName2 = {collectionName} />
+          {collectionName === "Skills" || collectionName === "Projects" && (
+            <AddTableCategory onTablesUpdated={fetchTablesData} collectionName2 = {collectionName} />
+          )}
+          {collectionName === "Experience" && (
+  <div>
+    <AddTableCategory onTablesUpdated={fetchTablesData} collectionName2={collectionName} />
+    
+    <div className="tablesGrid">
+      {tablesData.length > 0 ? (
+        tablesData.map((experience) => (
+          <div key={experience.id} className="tableCard">
+            <div className="experienceContent">
+            <h2>{experience.jobtitle}</h2>
+            <h4>{experience.company}</h4>
+            <h4>{experience.jobDates}</h4>
+            <p className = "description">{experience.jobDescription}</p>
+            {role === "admin" && (
+              <button onClick={() => handleDeleteTableCategory(experience.id)}>
+                Delete
+              </button>
+            )}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No Experience data available.</p>
+      )}
+    </div>
+  </div>
+)}
+
+          
         </div>
       )}
       <div className = "tablesGrid">
       {tablesData.length > 0 ? (
+        collectionName === "Skills" || collectionName === "Projects"? 
+        (
         tablesData.map((tableCategory) => (
           <div key={tableCategory.id} className = "tableCard">
             <table>
               <thead>
                 <tr>
-                  {collectionName === "Skills" ? (
-                  <th>{tableCategory.category}</th>
-                  ): collectionName === "Projects" ? (
-                    <th>{tableCategory.project}</th>
-                  ):(
+                  {collectionName === "Skills" && (
                     <>
-                      <th>{tableCategory.jobtitle}
-                      </th>
-                    </>
-                  )
-                  }
-                  <td>{tableCategory.jobDates}</td>
+                  <th>{tableCategory.category}</th>
                   {role === "admin" && (
                     <td className = "delete1">
                       <button onClick={() => handleDeleteTableCategory(tableCategory.id)}>
-                          Delete Job
-                        </button>
-                        <button onClick={() => handleDeleteTableCategory(tableCategory.id)}>
-                          Delete Date
+                          Delete
                         </button>
                         </td>
                   )}
+                  </>
                   
+                  )}
+                   {collectionName === "Projects" && (
+                    <>
+                    <th>{tableCategory.project}</th>
+                    {role === "admin" && (
+                    <td className = "delete1">
+                      <button onClick={() => handleDeleteTableCategory(tableCategory.id)}>
+                          Delete
+                        </button>
+                        </td>
+                  )}
+                    </>
+                  )}
                 </tr>
+                
               </thead>
               <tbody>
-                {collectionName === "Skills" ? (
+                {collectionName === "Skills" && (
                   tableCategory.tables).map((table, index) => 
                   ( //may need (tableCategory.tables || []) at some point
                     <tr key={index}>
@@ -141,7 +177,8 @@ function TablesDashboard({collectionName}) {
                       )}
                     </tr>
                 )
-                    ): collectionName === "Projects" ? (
+                    )} 
+                    {collectionName === "Projects" && (
                       tableCategory.description && (
                       <tr>
                       <td>{tableCategory.description}</td>
@@ -154,33 +191,21 @@ function TablesDashboard({collectionName}) {
                       )}
                       </tr>
                       )
-                    ):(
-                    tableCategory.jobDescription &&(
-                      <>
-
-                    <tr className = "company1">{tableCategory.company}</tr>
-                      <tr>
-                        <td>{tableCategory.jobDescription}</td>
-                        {role === "admin" && (
-                        <td>
-                          <button onClick={() => handleDeleteDescription(tableCategory.id)}>
-                            Delete
-                          </button>
-                        </td>
-                        )}
-                      </tr>
-                      </>
-                    ))}
-
+                    )}
               </tbody>
             </table>
             <br />
           </div>
+        
+        
         ))
-      ) : (
+        ):(<></>)
+        
+      )
+       : (
         <p>No {collectionName} data available.</p>
       )}
-
+    
       </div>
 
     </div>
