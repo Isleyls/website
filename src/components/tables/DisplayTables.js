@@ -91,7 +91,7 @@ function TablesDashboard({collectionName}) {
       {role === "admin" && (
         <div>
           <h3>Admin Dashboard</h3>
-          {collectionName === "Skills" || collectionName === "Projects" && (
+          {(collectionName === "Skills" || collectionName === "Projects") && (
             <AddTableCategory onTablesUpdated={fetchTablesData} collectionName2 = {collectionName} />
           )}
           {collectionName === "Experience" && (
