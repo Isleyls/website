@@ -12,17 +12,18 @@ import Meeting from "./components/meetings/Meeting";
 import Signin from "./components/authorization/Signin";
 import Skills from "./components/skills/Skills";
 import Register from "./components/authorization/Register";
+import useUserRole from './components/authorization/useUserRole';
 
 
 function App() {
-  
+  const {role} = useUserRole();
   return (
     <Router>
     <div className="app-container">
       
       <Header />
       
-      <main className="main-content">
+      <main className={`main-content ${role === 'admin' ? 'admin-padding' : 'user-padding'}`}>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

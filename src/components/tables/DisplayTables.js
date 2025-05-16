@@ -34,6 +34,7 @@ function TablesDashboard({collectionName}) {
 
   const handleDeleteTable = async (categoryId, tableToDelete) => {
     try {
+      
       const categoryRef = doc(db, collectionName, categoryId);
       const category = tablesData.find(item => item.id === categoryId);
       const updatedTables = category.tables.filter(table => table !== tableToDelete);
@@ -53,6 +54,25 @@ function TablesDashboard({collectionName}) {
       console.error("Error deleting {collectionName}:", error);
     }
   };
+
+  const handleDeleteDescription = async (categoryId) => {
+    try {
+      const categoryRef = doc(db, collectionName, categoryId);
+      await updateDoc(categoryRef, {
+        description: ""
+      });
+      setTablesData(prevTables =>
+        prevTables.map(item =>
+          item.id === categoryId
+            ? { ...item, description: "" }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Error deleting {collectionName}:", error);
+    }
+  };
+
   const handleDeleteTableCategory = async (categoryId) => {
     try {
         const category = tablesData.find(item => item.id === categoryId);
@@ -81,11 +101,25 @@ function TablesDashboard({collectionName}) {
             <table>
               <thead>
                 <tr>
+                  {collectionName === "Skills" ? (
                   <th>{tableCategory.category}</th>
+                  ): collectionName === "Projects" ? (
+                    <th>{tableCategory.project}</th>
+                  ):(
+                    <>
+                      <th>{tableCategory.jobtitle}
+                      </th>
+                    </>
+                  )
+                  }
+                  <td>{tableCategory.jobDates}</td>
                   {role === "admin" && (
                     <td className = "delete1">
                       <button onClick={() => handleDeleteTableCategory(tableCategory.id)}>
-                          Delete
+                          Delete Job
+                        </button>
+                        <button onClick={() => handleDeleteTableCategory(tableCategory.id)}>
+                          Delete Date
                         </button>
                         </td>
                   )}
@@ -93,18 +127,51 @@ function TablesDashboard({collectionName}) {
                 </tr>
               </thead>
               <tbody>
-                {(tableCategory.tables).map((table, index) => ( //may need (tableCategory.tables || []) at some point
-                  <tr key={index}>
-                    <td>{table}</td>
-                    {role === "admin" && (
-                      <td>
-                        <button onClick={() => handleDeleteTable( tableCategory.id, table)}>
-                          Delete
-                        </button>
-                      </td>
-                    )}
-                  </tr>
-                ))}
+                {collectionName === "Skills" ? (
+                  tableCategory.tables).map((table, index) => 
+                  ( //may need (tableCategory.tables || []) at some point
+                    <tr key={index}>
+                      <td>{table}</td>
+                      {role === "admin" && (
+                        <td>
+                          <button onClick={() => handleDeleteTable( tableCategory.id, table)}>
+                            Delete
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                )
+                    ): collectionName === "Projects" ? (
+                      tableCategory.description && (
+                      <tr>
+                      <td>{tableCategory.description}</td>
+                      {role === "admin" && (
+                        <td>
+                          <button onClick={() => handleDeleteDescription(tableCategory.id)}>
+                            Delete
+                          </button>
+                        </td>
+                      )}
+                      </tr>
+                      )
+                    ):(
+                    tableCategory.jobDescription &&(
+                      <>
+
+                    <tr className = "company1">{tableCategory.company}</tr>
+                      <tr>
+                        <td>{tableCategory.jobDescription}</td>
+                        {role === "admin" && (
+                        <td>
+                          <button onClick={() => handleDeleteDescription(tableCategory.id)}>
+                            Delete
+                          </button>
+                        </td>
+                        )}
+                      </tr>
+                      </>
+                    ))}
+
               </tbody>
             </table>
             <br />

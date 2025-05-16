@@ -46,12 +46,32 @@
     gap: 10px;
     padding: 20px;
     width: auto;
+    
   }
   
   .tableCard {
     border-radius: 7px;
+    min-height: 200px;
   }
 
   input{
     margin: 2px;
+  }
+
+  .projectDescription
+  {
+    min-height:100px;
+    min-width: 300px;
+    resize: vertical;
+    overflow: auto;
+  }
+  .description{
+    vertical-align: center;
+  }
+  .textArea{
+    display: flex;
+    align-items: flex-start; /* aligns label to top */
+  }
+  .company1{
+    text-align: center;
   }
